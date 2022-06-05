@@ -5,13 +5,17 @@
 package GUI;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import mdlaf.MaterialLookAndFeel;
 
 /**
  *
  * @author angel
  */
 public class Ventana extends javax.swing.JFrame {
-
+    
+//    VARIABLES
+    public int xMouse, yMouse;
     /**
      * Creates new form Ventana
      */
@@ -33,8 +37,8 @@ public class Ventana extends javax.swing.JFrame {
 
         background = new javax.swing.JPanel();
         titlePanel = new javax.swing.JPanel();
-        btn_salir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        lbl_salir = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,23 +49,36 @@ public class Ventana extends javax.swing.JFrame {
 
         titlePanel.setBackground(new java.awt.Color(168, 209, 231));
         titlePanel.setForeground(new java.awt.Color(64, 85, 86));
-        titlePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btn_salir.setBackground(new java.awt.Color(255, 102, 102));
-        btn_salir.setForeground(new java.awt.Color(0, 0, 0));
-        btn_salir.setText("X");
-        btn_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn_salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_salirActionPerformed(evt);
+        titlePanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                titlePanelMouseDragged(evt);
             }
         });
-        titlePanel.add(btn_salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, -1, 40, 40));
+        titlePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                titlePanelMousePressed(evt);
+            }
+        });
+        titlePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setBackground(new java.awt.Color(168, 209, 231));
         jLabel1.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(64, 85, 86));
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setText("Generador de Autómatas");
         titlePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, -1, -1));
+
+        lbl_salir.setBackground(new java.awt.Color(255, 51, 51));
+        lbl_salir.setFont(new java.awt.Font("Roboto Light", 0, 36)); // NOI18N
+        lbl_salir.setForeground(new java.awt.Color(51, 0, 0));
+        lbl_salir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_salir.setText("x");
+        lbl_salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbl_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_salirMouseClicked(evt);
+            }
+        });
+        titlePanel.add(lbl_salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 0, 40, 40));
 
         background.add(titlePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
 
@@ -94,10 +111,24 @@ public class Ventana extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+    private void lbl_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_salirMouseClicked
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btn_salirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_lbl_salirMouseClicked
+
+    private void titlePanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanelMousePressed
+        // TODO add your handling code here:
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+        
+    }//GEN-LAST:event_titlePanelMousePressed
+
+    private void titlePanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanelMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x-xMouse,y-yMouse);
+    }//GEN-LAST:event_titlePanelMouseDragged
 
     /**
      * @param args the command line arguments
@@ -109,18 +140,9 @@ public class Ventana extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel( new MaterialLookAndFeel());
+  
+        
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -136,9 +158,9 @@ public class Ventana extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
-    private javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lbl_salir;
     private javax.swing.JPanel titlePanel;
     // End of variables declaration//GEN-END:variables
 }
